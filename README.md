@@ -35,7 +35,7 @@ Clone this repository:
 
 ```bash
 
-git clone https://github.com/ahuirecome/LFB-ES.git
+git clone https://github.com/ahuirecome/LFB.git
 cd LFB-ES
     
 ```
