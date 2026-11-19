@@ -1,0 +1,32 @@
+init_sigma:0.1, mean loss:0.060752117551533126
+init_sigma:0.2, mean loss:0.058240223588518575
+init_sigma:0.3, mean loss:0.058647522490089664
+init_sigma:0.4, mean loss:0.055486777343297114
+init_sigma:0.5, mean loss:0.06028806826176059
+init_sigma:0.6, mean loss:0.054954828202864237
+init_sigma:0.7, mean loss:0.0497137196641139
+init_sigma:0.8, mean loss:0.04716192297693887
+init_sigma:0.9, mean loss:0.04888429618463477
+init_sigma:1.0, mean loss:0.046946687362956235
+init_sigma:1.1, mean loss:0.06888663162274827
+init_sigma:1.2, mean loss:0.04430310214824819
+init_sigma:1.3, mean loss:0.05083765201574955
+
+init_sigma:1.4, mean loss:0.03665653350646168
+
+init_sigma:1.5, mean loss:0.04143980598887588
+init_sigma:1.6, mean loss:0.07944711144329253
+init_sigma:1.7, mean loss:0.04350982773734166
+init_sigma:1.8, mean loss:0.08185843788618043
+init_sigma:1.9, mean loss:0.05254061598788043
+init_sigma:2.0, mean loss:0.04804487482623496
+init_sigma:2.1, mean loss:0.0417563487718991
+init_sigma:2.2, mean loss:0.11608734237134416
+init_sigma:2.3, mean loss:0.06735715583470078
+init_sigma:2.4, mean loss:0.10489209060992977
+init_sigma:2.5, mean loss:0.07390812898880311
+init_sigma:2.6, mean loss:0.1284926048285956
+init_sigma:2.7, mean loss:0.10983550841855085
+init_sigma:2.8, mean loss:0.13021312375505723
+init_sigma:2.9, mean loss:0.14178990171496814
+init_sigma:3.0, mean loss:0.14224256536391033

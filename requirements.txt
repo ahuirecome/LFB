@@ -1,0 +1,5 @@
+matplotlib
+numpy
+cma
+torch==2.12.1
+
