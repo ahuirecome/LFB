@@ -27,7 +27,7 @@ import argparse
 import os
 
 
-class LFB_ES(object):
+class LFB(object):
     def __init__(self, env,
                  pop_size=40,
                  max_evaluation=10000,
@@ -99,10 +99,10 @@ class LFB_ES(object):
             self.agent_evolve(self.env.states, targets)
 
             time_cost = time.time() - start_time
-            if generation % 100 == 0:
-                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+            if generation % 10 == 0:
+                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
-        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
         return self.agents[best_index], loss_history
 
@@ -180,7 +180,7 @@ def fit_curve(curve_id, log_dir, save_log):
 
         print(f'======================================== round:{round}, seed:{seed} ==================================')
         env = BlackBoxEnv(curve_id=curve_id)
-        lfb_es = LFB_ES(
+        lfb_es = LFB(
             env=env,
             pop_size=args.pop_size,
             max_evaluation=args.max_evaluation,
@@ -213,11 +213,12 @@ def fit_curve(curve_id, log_dir, save_log):
     print(f'curve:{curve_id}')
     print(f"loss: mean:{np.mean(losses):.5f}, std:{np.std(losses):.5f}",)
 
-    with open(f'{log_dir}/result_{args.activation}_step{args.training_step}_popsize{args.pop_size}.txt', 'a') as f:
-        print(f'curve:{curve_id}, evaluation:{args.max_evaluation}', file=f)
-        print(f"loss:{losses}", file=f)
-        print(f"loss: mean:{np.mean(losses):.5f}, std:{np.std(losses):.5f}", file=f)
-        print('=======================================================================================', file=f, flush=True)
+    if save_log:
+        with open(f'{log_dir}/result_{args.activation}_step{args.training_step}_popsize{args.pop_size}.txt', 'a') as f:
+            print(f'curve:{curve_id}, evaluation:{args.max_evaluation}', file=f)
+            print(f"loss:{losses}", file=f)
+            print(f"loss: mean:{np.mean(losses):.5f}, std:{np.std(losses):.5f}", file=f)
+            print('=======================================================================================', file=f, flush=True)
 
     print("---- finished ----")
 
@@ -225,7 +226,7 @@ def fit_curve(curve_id, log_dir, save_log):
 def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=0)
-    #parser.add_argument("--curve_id", type=id, default=0)
+    parser.add_argument("--curve_id", type=id, default=0)
     parser.add_argument("--pop_size", type=int, default=40)
     parser.add_argument("--max_evaluation", type=int, default=40000)
     parser.add_argument("--activation", type=str, default="cos", choices=["cos", "relu", "tanh"])
@@ -244,8 +245,8 @@ if __name__ == "__main__":
 
     log_dir = f"./logs/lfb/layer{args.min_layer}_{args.max_layer}"
     os.makedirs(log_dir, exist_ok=True)
-    for k in range(0, 8):
-        fit_curve(k, log_dir, save_log=False)
+
+    fit_curve(args.curve_id, log_dir, save_log=False)
 
     print('========== finished =========')
 

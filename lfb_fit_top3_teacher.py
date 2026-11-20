@@ -110,9 +110,9 @@ class LFB_ES(object):
 
             time_cost = time.time() - start_time
             if generation % 100 == 0:
-                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
-        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
         return self.agents[best_index], loss_history
 

@@ -36,7 +36,7 @@ Clone this repository:
 ```bash
 
 git clone https://github.com/ahuirecome/LFB.git
-cd LFB-ES
+cd LFB
     
 ```
 
@@ -72,19 +72,11 @@ python lfb_fit.py --curve_id=0
     
 ```
 
-Run the OpenAI‑ES algorithm for curve fitting with default parameters:
+To fit a set of curves to obtain statistical results:
 
 ```bash
 
-python openai_es_fit.py  --curve_id=0
-    
-```
-
-Run the OpenAI‑ES algorithm for curve fitting with default parameters:
-
-```bash
-
-python cma_es_fit.py  --curve_id=0
+python lfb_fit_batch.py 
     
 ```
 

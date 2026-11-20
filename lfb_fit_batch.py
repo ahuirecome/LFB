@@ -27,7 +27,7 @@ import argparse
 import os
 
 
-class LFB_ES(object):
+class LFB(object):
     def __init__(self, env,
                  pop_size=40,
                  max_evaluation=10000,
@@ -35,7 +35,7 @@ class LFB_ES(object):
                  min_layer=8,
                  max_layer=8,
                  hidden_dim=32,
-                 lr=0.0001,
+                 #lr=0.0001,
                  training_step=10):
         self.env = env
         self.pop_size = pop_size
@@ -44,7 +44,7 @@ class LFB_ES(object):
         self.min_layer = min_layer
         self.max_layer = max_layer
         self.hidden_dim = hidden_dim
-        self.lr = lr
+        self.lrs = [0.0001]
         self.training_step = training_step
         self.agents = self.init_agent(max_agent=self.pop_size, activation=self.activation, hidden_dim=self.hidden_dim)
 
@@ -55,7 +55,7 @@ class LFB_ES(object):
 
         net_info = self.agents[0].net.get_setting()
         info += f'_{net_info}'
-        info += f'_lr({self.lr})'
+        info += f'_lr({self.lrs})'
         info += f'_steps({self.training_step})'
         return info
 
@@ -63,7 +63,7 @@ class LFB_ES(object):
         agents = []
         for k in range(max_agent):
             num_layer = random.randint(self.min_layer, self.max_layer)
-            lr = random.choice([0.1, 0.01, 0.001, 0.0001])
+            lr = random.choice(self.lrs)
             agent = Agent(id=k, in_dim=1, out_dim=1, num_layers=num_layer, activation=activation, hidden_dim=hidden_dim, lr=lr)
             agents.append(agent)
 
@@ -100,9 +100,9 @@ class LFB_ES(object):
 
             time_cost = time.time() - start_time
             if generation % 100 == 0:
-                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+                print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
-        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, loss:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
+        print(f'generation:{generation}, num_evaluation: {num_evaluation}, best agent:{best_index}, fitting_error:{best_loss:.8f}, lr:{best_agent.lr}, time_cost:{time_cost:.1f}s')
 
         return self.agents[best_index], loss_history
 
@@ -126,7 +126,7 @@ class LFB_ES(object):
 
         for k in range(len(self.agents)):
             if k != best_index:
-                self.agents[k].learn(states, targets, self.lr, self.training_step)
+                self.agents[k].learn(states, targets, lr=None, steps=self.training_step)
 
     def show_curve(self, x, y, y_pred, title):
         plt.ion()
@@ -180,7 +180,7 @@ def fit_curve(curve_id, log_dir, save_log):
 
         print(f'======================================== round:{round}, seed:{seed} ==================================')
         env = BlackBoxEnv(curve_id=curve_id)
-        lfb_es = LFB_ES(
+        lfb_es = LFB(
             env=env,
             pop_size=args.pop_size,
             max_evaluation=args.max_evaluation,
@@ -188,7 +188,7 @@ def fit_curve(curve_id, log_dir, save_log):
             min_layer=args.min_layer,
             max_layer=args.max_layer,
             hidden_dim=args.hidden_dim,
-            lr=args.lr,
+            #lr=args.lr,
             training_step=args.training_step
         )
 
@@ -232,8 +232,8 @@ def get_parser():
     parser.add_argument("--min_layer", type=int, default=2)
     parser.add_argument("--max_layer", type=int, default=8)
     parser.add_argument("--hidden_dim", type=int, default=32)
-    parser.add_argument("--lr", type=float, default=0.0001)
-    parser.add_argument("--training_step", type=int, default=50)
+    #parser.add_argument("--lr", type=float, default=0.0001)
+    parser.add_argument("--training_step", type=int, default=10)
     parser.add_argument("--max_round", type=int, default=10)
     return parser
 
